@@ -8,6 +8,7 @@
 /*.txt
 /*.config
 /.editorconfig
+/.htaccess
 /sites/example.sites.php
 /sites/default
 /sites/all/themes/rubik
