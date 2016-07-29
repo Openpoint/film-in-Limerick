@@ -1,0 +1,152 @@
+<?php
+
+//create two new blocks, one for all loactions and one for single location. Turn of block caching otherwise page cache does not allow for unique data to block.
+function op_map_block_info() {
+
+	$blocks = array();
+	$blocks['all_locations'] = array(
+		'info' => t('All Locations Map'),
+		'cache' => DRUPAL_NO_CACHE,
+	);
+	$blocks['single_location'] = array(
+		'info' => t('Single Location Map'),
+		'cache' => DRUPAL_NO_CACHE,
+	); 
+	return $blocks;
+}
+
+
+//provide input for the blocks to know the URL to get the GEOjson feed from Drupal Views
+function op_map_block_configure($delta) {
+
+	$form = array();
+	$form['feed_path'] = array(
+		'#type' => 'textfield', 
+		'#title' => t('Enter the geoJson feed path without leading /'), 
+		'#size' => 60, 
+		'#maxlength' => 128, 
+		'#required' => TRUE,
+	);
+	
+	//different variable storage locations for each block's path
+	switch($delta){
+		case 'all_locations':
+			$form['feed_path']['#default_value'] = variable_get('op_map_module_allLocationsFeedPath', '');
+			break;
+			
+		case 'single_location':
+			$form['feed_path']['#default_value'] = variable_get('op_map_module_singleLocationFeedPath', '');
+			break;
+	}
+	return $form;
+
+}
+
+
+//save the feed URL to database 
+function op_map_block_save($delta, $edit) {
+
+	switch($delta) {
+		case 'all_locations' :    
+			variable_set('op_map_module_allLocationsFeedPath', $edit['feed_path']);
+			break;
+		case 'single_location' :
+			variable_set('op_map_module_singleLocationFeedPath', $edit['feed_path']);
+			break;
+		
+	}
+}
+
+
+//Actions on block being viewed
+function op_map_block_view($delta) {
+	
+	//load Openlayers and custom resources
+	drupal_add_css(drupal_get_path('module', 'op_map') . '/js/openlayers/ol.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	drupal_add_css(drupal_get_path('module', 'op_map') . '/css/popup.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	//drupal_add_js("https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch,requestAnimationFrame,Element.prototype.classList");
+	drupal_add_js(drupal_get_path('module', 'op_map') . '/js/openlayers/ol.js');	
+	drupal_add_js(drupal_get_path('module', 'op_map') . '/js/op_map_functions.js');
+	drupal_add_js(drupal_get_path('module', 'op_map') . '/js/op_map.js');
+	$mpath = drupal_get_path('module', 'op_map');
+	
+	$my_settings = array(
+		'module_path'=>$mpath,
+	);
+	$block = array();
+		
+	switch($delta) {
+		
+		//construct the all locations block
+		case 'all_locations' :
+			$my_settings['feed_path'] = variable_get('op_map_module_allLocationsFeedPath');
+			$block['subject']=NULL;
+			$block['content']="
+			<div id = 'op_mapWrapper'>
+				<div id='op_map' class='op_map op_group big' tabindex='0'></div>
+				<div id='popup' class='ol-popup'>
+					<a href='#' id='popup-closer' class='ol-popup-closer c1 text'></a>
+					<div id='popup-content'></div>
+				</div>
+				<div class='mask'>
+					<span class='material-icons scroll'>&#xE8D5;</span>
+				</div>
+			</div>			
+			";
+		break;
+		
+		//construct the single location block
+		case 'single_location' :
+			$my_settings['feed_path'] = variable_get('op_map_module_singleLocationFeedPath');
+			$node = menu_get_object();
+			
+			//construct and add single point lonlat and nid identifier to HTML for map javascript to act upon 
+			if(isset($node->field_location_map)){
+				$lon = $node->field_location_map['und']['0']['lon']; 
+				$lat = $node->field_location_map['und']['0']['lat'];
+				$lonlat = $lon.','.$lat;
+				$latlon = $lat.' , '.$lon;
+				$block['subject']=NULL;
+				$block['content']="
+				<div id = 'op_mapWrapper' class='c1 bdr'>
+					<div id='op_map_stretch'></div>
+					<div id='op_map' class=''>
+						<div id='op_map_latlon' style='display:none;'>[".$lonlat."]</div>
+						<div id='op_map_nid' style='display:none;'>".$node->nid."</div>
+					</div>
+					
+					<div id='popup' class='ol-popup'>
+						<a href='#' id='popup-closer' class='ol-popup-closer c1 text'></a>
+						<div id='popup-content'></div>
+					</div>
+					<div class='mask'>
+						<span class='material-icons scroll'>&#xE8D5;</span>
+					</div>
+				</div>
+				<div id='op_directions' class='c1 bg bdr'>
+					<a class='button c7 bdr text font1 semibold' target='_blank' href='https://www.google.com/maps/preview?saddr=Current+Location&daddr=".$lat.",".$lon."&dirflg=t'>Get Directions</a>
+					<div class='latlon c7 text'>lat | lon: <span>".$latlon."</span></div>
+				</div>
+				
+				
+				";
+			}else{
+				
+				//log a warning if the block has been placed on a page without a map
+				watchdog(
+					'op_map module', 
+					'The page you have inserted the map block into does not contain a map', 
+					$variables = array(), 
+					$severity = WATCHDOG_NOTICE, 
+					$link = NULL
+				);
+			}
+			break;
+	}
+	
+	//provide the GEOjson feed URL to javascript
+	drupal_add_js(array('op_map' => $my_settings), 'setting');
+	return $block;
+}
+
+

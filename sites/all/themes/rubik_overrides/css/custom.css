@@ -1,0 +1,28 @@
+.page-content .password-description, .page-content .password-strength, .page-content .description, .page-content .form-item .description {
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.form-item label.option {
+    font-size: 12px;
+}
+
+.item-list h3, .block .block-title, .fieldset-title, .collapsible .fieldset-legend a {
+    font-size: 14px;
+}
+
+.form-item label {
+    font-size: 11px;
+}
+
+.maphack{
+	display:block!important;
+}
+
+.group-hidden,.group_hidden{
+	display:none;
+}
+
+#edit-overlay-control{
+	display:none!important;
+}

@@ -1,0 +1,6 @@
+name = Openlayers map block
+core = 7.x
+description = Provide a map block to present geojson feed
+dependencies[] = views_geojson
+package = "Custom by Openpoint"
+

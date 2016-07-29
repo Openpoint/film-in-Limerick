@@ -1,0 +1,4 @@
+name = Menu Alter
+core = 7.x
+description = Add various blank pages and additional tabs to the menu router.
+package = "Custom by Openpoint"

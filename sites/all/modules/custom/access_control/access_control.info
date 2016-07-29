@@ -1,0 +1,4 @@
+name = Access Control
+core = 7.x
+description = Permission for various content scenarios.
+package = "Custom by Openpoint"

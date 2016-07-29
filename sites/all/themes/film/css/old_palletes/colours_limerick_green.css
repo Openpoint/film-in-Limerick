@@ -1,0 +1,93 @@
+/* The first primary colour */
+.c1.bg{
+	background:#006E40;
+}
+.c1.bdr, .c1.bdr *, .c1.bdr:before, .c1.bdr:after{
+	border-color:#006E40;
+}
+.c1.text, .c1.text a{
+	color:#006E40;
+}
+a.c1.text{
+	color:#006E40!important;
+}
+/* The second primary colour */
+.c2.bg{
+	background:#3E6990;
+}
+.c2.bdr, .c2.bdr *, .c2.bdr:before, .c2.bdr:after{
+	border-color:#3E6990;
+}
+.c2.text, .c2.text a{
+	color:#3E6990;
+}
+a.c2.text{
+	color:#3E6990!important;
+}
+
+
+/* The first highlight colour */
+.c3.bg{
+	background:#AABD8C;
+}
+.c3.bdr, .c3.bdr *, .c3.bdr:before, .c3.bdr:after{
+	border-color:#AABD8C;
+}
+.c3.text, .c3.text a{
+	color:#AABD8C;
+}
+a.c3.text{
+	color:#AABD8C!important;
+}
+
+/* The second highlight colour */
+.c4.bg{
+	background:#E9E3B4;
+}
+.c4.text, .c4.text a{
+	color:#E9E3B4;
+}
+a.c4.text{
+	color:#E9E3B4!important;
+}
+
+/* A very light accent */
+.c5.bg{
+	background:#F9F9F9;
+}
+.c5.text, .c5.text a{
+	color:#F9F9F9;
+}
+a.c5.text{
+	color:#F9F9F9!important;
+}
+
+/* A very dark accent */
+.c6.bg{
+	background:#333333;
+}
+.c6.text, .c6.text a{
+	color:#333333;
+}
+a.c6.text{
+	color:#333333!important;
+}
+
+/* White or closest to */
+.c7.bg{
+	background:white;
+}
+.c7.bdr, .c7.bdr *, .c7.bdr:before, .c7.bdr:after{
+	border-color:white;
+}
+.c7.text, .c7.text a{
+	color:white;
+}
+a.c7.text{
+	color:white!important;
+}
+
+/* The black mask to let text read over images */
+.mask, .mask:after{
+	background:rgba(0,0,0,.25);
+}

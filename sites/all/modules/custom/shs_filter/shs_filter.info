@@ -1,0 +1,5 @@
+name = Simple hierarchical select filter
+core = 7.x
+description = Removes empty terms in views filter and adds node count.
+dependencies[] = shs
+package = "Custom by Openpoint"

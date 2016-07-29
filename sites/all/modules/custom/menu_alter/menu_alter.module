@@ -1,0 +1,77 @@
+<?php
+
+//add blank pages to insert views blocks into
+function menu_menu_alter(&$items) {
+	
+	$items['contact']['access arguments'][0]=false;
+	
+	$items['locations'] = array(
+		'title' => 'Locations',
+		'page callback' => 'newpage',
+		'access arguments' => array('access content'),
+	);
+	$items['production'] = array(
+		'title' => 'Production',
+		'page callback' => 'newpage',
+		'access arguments' => array('access content'),
+	);
+	$items['front'] = array(
+		'title' => 'Front Page',
+		'page callback' => 'newpage',
+		'access arguments' => array('access content'),
+	); 
+	$items['shot'] = array(
+		'title' => 'Shot',
+		'page callback' => 'newpage',
+		'access arguments' => array('access content'),
+	);
+	$items['bookmarks'] = array(
+		'title' => 'Bookmarks',
+		'page callback' => 'newpage',
+		'access arguments' => array('access content'),
+	);
+	$items['terms'] = array(
+		'title' => 'Terms and Conditions',
+		'page callback' => 'newterms',
+		'access arguments' => array('access content'),
+	);
+	$items['cookies'] = array(
+		'title' => 'Cookies Policy',
+		'page callback' => 'newcookies',
+		'access arguments' => array('access content'),
+	);
+	$items['fourothree'] = array(
+		'title' => '403 access denied',
+		'page callback' => 'fourothree',
+		'access arguments' => array('access content'),
+	);
+	$items['fourofour'] = array(
+		'title' => '404 not found',
+		'page callback' => 'fourofour',
+		'access arguments' => array('access content'),
+	);
+
+	return $items;
+}
+
+function newpage(){
+	return "";
+}
+function newterms(){
+	$html = file_get_contents(drupal_get_path('theme','film').'/html/terms.html');
+	return $html;
+}
+
+function newcookies(){
+	$html = file_get_contents(drupal_get_path('theme','film').'/html/cookies.html');
+	return $html;
+}
+function fourothree(){
+	$html = file_get_contents(drupal_get_path('theme','film').'/html/fourothree.html');
+	return $html;
+}
+function fourofour(){
+	$html = file_get_contents(drupal_get_path('theme','film').'/html/fourofour.html');
+	return $html;
+}
+

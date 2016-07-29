@@ -1,0 +1,37 @@
+name = Film in Limerick
+description = Custom theme by Openpoint.ie
+screenshot = screenshot.png
+core = 7.x
+
+regions[menu] = Menu
+regions[menu_left] = Menu Left
+regions[menu_right] = Menu Right
+regions[menu_search] = Menu Search
+regions[menu_editor] = Menu Editor
+regions[featured] = Featured
+regions[content] = Content
+regions[sidebar] = Sidebar
+regions[sidebar_widgets] = Sidebar Widgets
+regions[sidebar_bottom] = Sidebar Bottom
+regions[wide_map] = Wide Map
+regions[wide_bottom2] = Wide Bottom
+regions[wide_bottom] = Wide Bottom Blue
+regions[footer] = Footer
+
+features[] = logo
+features[] = name
+features[] = slogan
+features[] = favicon
+features[] = main_menu
+
+stylesheets[screen][] = css/reset.css
+stylesheets[screen][] = css/fluidgrid.css
+stylesheets[screen][] = css/webfont/stylesheet.css
+stylesheets[screen][] = css/colours.css
+stylesheets[screen][] = css/film_styles.css
+stylesheets[screen][] = css/film.css
+stylesheets[screen][] = css/fluidmedia.css
+
+scripts[] = js/js.cookie-2.1.2.min.js
+scripts[] = js/timeago/jquery.timeago.js
+scripts[] = js/film.js

@@ -1,0 +1,63 @@
+<?php
+
+
+
+function shs_filter_shs_term_get_children_alter(&$terms, $alter_options) {
+	
+	$vid = $alter_options['vid'];
+	$parent = $alter_options['parent'];
+
+	if(isset($terms[$vid][$parent])){
+		$list = $terms[$vid][$parent][0];
+	}
+
+	if($parent == 0){
+		$new_terms[$vid][$parent][0]['0'] = "-- Categories --";		
+		foreach($terms[$vid][$parent][0] as $key=>$term){
+			$new_terms[$vid][$parent][0][$key] = $term;
+		}
+		unset($terms[$vid][$parent][0]);
+		$terms[$vid][$parent][0]=$new_terms[$vid][$parent][0];
+	}
+
+	if(isset($list)){
+		$temp = array_keys($list);
+		if($vid == 3){
+			$type = ['location'];
+		}
+		if($vid == 2){
+			$type = ['person','business','physical_item'];
+		}		
+		$query = new EntityFieldQuery();
+		$entities = $query->entityCondition('entity_type', 'node')
+		->propertyCondition('type', $type)
+		->propertyCondition('status', 1)
+		->fieldCondition('field_approved','value', 1)
+		->execute();
+
+		//Modify terms	
+		foreach($temp as $tid){
+
+			$nodes = taxonomy_select_nodes($tid,FALSE);
+			
+			foreach($nodes as $key => $node){
+				if(!isset($entities['node'][$node])){
+					unset($nodes[$key]);
+				}
+			}
+			if(count($nodes) > 0){
+				
+				$terms[$vid][$parent][0][$tid] = $terms[$vid][$parent][0][$tid]." (".count($nodes).")";
+			}else{
+				unset($terms[$vid][$parent][0][$tid]);
+				unset($terms[$vid][$tid]);			
+			}
+			
+		}
+
+	}
+	
+	//Return an updated list of terms
+	return $terms;
+	
+}

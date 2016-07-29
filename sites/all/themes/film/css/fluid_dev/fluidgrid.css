@@ -1,0 +1,223 @@
+<?php
+    header("Content-type: text/css; charset: UTF-8");
+    $cols = 16;
+?>
+
+.clear-right {
+	clear:right;
+}
+.clear-left {
+	clear:left;
+}
+
+
+.container {
+margin:0 auto 0 auto;
+max-width:1200px;
+min-width:320px;
+position:relative;
+}
+.box {
+width:100%;
+
+box-sizing:border-box;
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+}
+
+
+<?php 
+$i = 1;
+while ($i <= $cols){
+
+	echo '.container-'.$i.'{		
+display:inline;
+float:left;
+width:'.(100/$cols)*$i.'%;
+position:relative;
+
+	
+}
+';
+$i++;
+}
+$i = 1;
+while ($i <=$cols){
+
+	echo '.grid-'.$i.'{		
+display:inline;
+float:left;
+width:'.(100/$cols)*$i.'%;
+padding-left:0.5em;
+padding-right:0.5em;
+box-sizing:border-box;
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+position:relative;
+
+	
+}
+';
+$i++;
+}
+?>
+.grid-trip{		
+display:inline;
+float:left;
+width:33.3333%;
+padding-left:0.5em;
+padding-right:0.5em;
+box-sizing:border-box;
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+position:relative;	
+}
+.grid-fyf{		
+display:inline;
+float:left;
+width:20%;
+padding-left:0.5em;
+padding-right:0.5em;
+box-sizing:border-box;
+-moz-box-sizing:border-box;
+-webkit-box-sizing:border-box;
+position:relative;	
+}
+<?php
+$i = 1;
+while ($i <=$cols){
+
+	if ($i != $cols){
+		echo '.push-'.$i.',.pull-'.$i.',';
+	}else{
+		echo '.push-'.$i.',.pull-'.$i;
+	}
+	$i++;
+}
+
+?>
+{
+position:relative;
+}
+<?php
+$i = 1;
+while ($i <=$cols){
+	$i2 = 1;
+	while ($i2 <=12 && $i+$i2 <=12){
+		echo '.container-'.$i.'.push-'.$i2.'{
+left:'.(100/$cols)*$i2.'%;
+}';
+		$i2++;
+	}
+	$i++;	
+}
+$i = 1;
+while ($i <=$cols){
+	$i2 = 1;
+	while ($i2 <=$cols && $i+$i2 <=$cols){
+		echo '.container-'.$i.'.pull-'.$i2.'{
+left:-'.(100/$cols)*$i2.'%;
+}';
+		$i2++;
+	}
+	$i++;	
+}
+$i = 1;
+while ($i <=$cols){
+	$i2 = 1;
+	while ($i2 <=$cols && $i+$i2 <=$cols){
+		echo '.grid-'.$i.'.prefix-'.$i2.'{
+margin-left:'.(100/$cols)*$i2.'%;
+}
+';
+		$i2++;
+	}
+	$i++;	
+}
+$i = 1;
+while ($i <=$cols){
+	$i2 = 1;
+	while ($i2 <=$cols && $i+$i2 <=$cols){
+		echo '.grid-'.$i.'.suffix-'.$i2.'{
+margin-right:'.(100/$cols)*$i2.'%;
+}
+';
+		$i2++;
+	}
+	$i++;	
+}
+?>
+
+.fixed .inner{
+position:absolute;
+left:0!important;
+right:0!important;
+top:0!important;
+bottom:0!important;
+
+}
+
+.fixed.box:before {
+content:"";
+line-height:0;
+font-size:0;
+display:block;	
+width:100%;
+margin-top:100%;
+}
+.fixed.box.l-2:before {
+margin-top:50%;	
+}
+.fixed.box.p-2:before {
+margin-top:200%;	
+}
+.fixed.box.l-metric:before {
+margin-top:70.714285714%;	
+}
+.fixed.box.p-metric:before {
+margin-top:141.414141414%;	
+}
+.fixed.box.l-sidelink:before {
+margin-top:54%;	
+}
+.fixed.box.rbox:before {
+margin-top:100%;	
+}
+.fixed.box.biglist:before {
+margin-top:58.1%;
+}
+
+.side-barleft, .side-barright {
+min-height:1px;
+}
+.side-barright {
+	position:absolute;
+	right:-25%;
+	top:0;
+}
+
+img.w100, .w100 img {
+	max-width:100%;
+	width:100%!important;
+	height:auto!important;
+}
+img.h100, .h100 img {
+	max-height:100%; 
+	height:100%!important;
+	width:auto!important;
+}
+.box .inner {
+	overflow:hidden;
+}
+.box .inner img {
+display:block;
+}
+.alpha{
+padding-left:0;
+}
+.omega{
+padding-right:0;
+}
+.rightfloat {
+float:right;
+}

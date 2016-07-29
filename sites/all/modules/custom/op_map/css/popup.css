@@ -1,0 +1,71 @@
+.ol-popup {
+	position: absolute;
+	background-color: white;
+	-webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+	filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+	padding: 15px;
+	border-radius: 10px;
+	border: 1px solid #cccccc;
+	bottom: 48px;
+	left: -50px;
+	min-width: 280px;
+}
+.ol-popup:after, .ol-popup:before {
+	top: 100%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+.ol-popup:after {
+	border-top-color: white;
+	border-width: 10px;
+	left: 48px;
+	margin-left: -10px;
+}
+.ol-popup:before {
+	border-top-color: #cccccc;
+	border-width: 11px;
+	left: 48px;
+	margin-left: -11px;
+}
+.ol-popup-closer {
+	text-decoration: none;
+	position: absolute;
+	top: 2px;
+	right: 8px;
+}
+.ol-popup-closer:after {
+	content: "✖";
+}
+
+.ol-popup .inside{
+	display:inline-block;
+	max-width:50%;
+	float:left;
+	box-sizing:border-box;
+}
+.ol-popup .text{
+	padding-left:1em;
+}
+.ol-popup .image{
+	line-height:0;
+	border-style:solid;
+	border-width:1px;
+	width:120px;
+	height:120px;
+}
+.ol-popup li{
+	line-height:1.2em;
+	padding:5px 0;
+}
+
+.ol-control button{
+	background-color:rgba(225,30,112,.75)!important;
+	cursor:pointer;
+}
+.big .ol-control button{
+	font-size:1.5em;
+}

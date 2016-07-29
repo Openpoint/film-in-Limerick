@@ -1,0 +1,218 @@
+<?php
+
+//limits the available hs select options by context  in the content form
+function addJs($filters){
+	drupal_add_js(array('form_hooks' => $filters), 'setting');
+	drupal_add_js(drupal_get_path('module', 'form_hooks') . '/js/hs_filter.js','file');	
+}
+function check_map($form, &$form_state){
+	//dpm($form);
+	//dpm($form_state);
+	$geom = $form_state['values']['field_location_map']['und'][0]['geom'];
+	if ($geom['lat']==='52.66222476021814' && $geom['lon']==='-8.633880615234375') {
+		form_set_error('field_location_map', t('Please set a valid location on the map.'));
+	}
+}
+function form_hooks_form_alter(&$form, &$form_state, $form_id) {
+	//dpm($form_id);
+	switch($form_id){
+		case 'person_node_form':
+		case 'business_node_form':
+		case 'physical_item_node_form':
+			$filters = new stdClass();
+			break;		
+	}
+	switch($form_id){
+		case 'person_node_form':
+		case 'business_node_form':
+		case 'physical_item_node_form':
+		case 'location_node_form':
+			if(user_has_role(4)){				
+				$form['author']['#access']=TRUE;
+				$form['author']['date']['#access']=FALSE;
+			}
+			
+			if(!user_has_role(4) && !user_has_role(3)){
+				//$form['field_body']['#after_build'][] = 'form_hooks_hide_text_format';
+				$form['options']['#after_build'][]='form_hooks_hide_publish';
+				//dpm($form);
+			}		
+			break;		
+	}	
+	switch($form_id){
+		
+		case 'front_page_node_form':
+			$form['field_contact_details'][LANGUAGE_NONE][0]['#format'] = 'production_info';
+			$form['field_contact_details']['#after_build'][] = 'form_hooks_hide_text_format';		
+			break;
+		case 'production_info_node_form':
+		case 'film_node_form':			
+			$form['field_body'][LANGUAGE_NONE][0]['#format'] = 'production_info';
+			$form['field_body']['#after_build'][] = 'form_hooks_hide_text_format';
+			break;
+		case 'location_node_form':
+			//dpm($form['field_location_map']['und'][0]);
+			//dpm($form['field_location_map']['und'][0]['geom']['#default_value']);
+			$form['#validate'][] = 'check_map';
+			break;
+			
+		case 'person_node_form':
+			$filters->filter = array(1,2);
+			addJs($filters);
+			$form['field_body'][LANGUAGE_NONE][0]['#format'] = 'paragraphs';
+			$form['field_body']['#after_build'][] = 'form_hooks_hide_text_format';			
+			break;
+			
+		case 'business_node_form':
+			$filters->filter = array(68,70,215);
+			addJs($filters);
+			$form['field_body'][LANGUAGE_NONE][0]['#format'] = 'paragraphs';
+			$form['field_body']['#after_build'][] = 'form_hooks_hide_text_format';			
+			break;	
+		case 'physical_item_node_form':
+			$filters->filter = array(69,81);
+			addJs($filters);
+			$form['field_body'][LANGUAGE_NONE][0]['#format'] = 'paragraphs';
+			$form['field_body']['#after_build'][] = 'form_hooks_hide_text_format';			
+			break;
+		case 'user_register_form':
+			$form['#group_children']=[];
+			array_push($form['#attributes']['class'],'grid-8','prefix-4','c1','bdr');
+			$form['#attributes']['id'] = 'register_form';
+			$form['account']['mail']['#description']=t('A valid email to be used for account verification. It will be kept private but may be used for editorial correspondence');
+			break;
+
+		case 'views_exposed_form':
+
+			$path = explode("/", current_path());
+			if(isset($form['search_api_views_fulltext']) && $path[0]!=='search'){			
+				$form['search_api_views_fulltext']['#required']=FALSE;
+				$form['#attributes']=[];
+			}
+			if(isset($form['search_api_views_fulltext'])){
+				if(user_has_role(4) || user_has_role(3) || user_has_role(6)){
+					$form['search_api_views_fulltext']['#attributes']=array('placeholder'=>t('Find anyone, anything, anywhere....'));
+				}else{
+					$form['search_api_views_fulltext']['#attributes']=array('placeholder'=>t('Search for locations....'));
+				}
+			}
+			if($form['#id']==='views-exposed-form-user-page-1'){
+				$form['status_1']['#options']['0']='Yes';
+				$form['status_1']['#options']['1']='No';
+			}
+			if($form['#id']==='views-exposed-form-user-block-7'){
+				$form['title']['#attributes']=array('placeholder'=>t('Search for a contact....'));
+			}
+			break;
+			
+		case 'comment_node_location_form':
+		case 'comment_node_physical_item_form':
+		case 'comment_node_business_form':
+		case 'comment_node_person_form':
+			global $user;
+			if(!in_array("editor", $user->roles) && !in_array("administrator", $user->roles)):
+				if($user->uid !== $form['#node']->uid):
+					$form['#access']=FALSE;
+				endif;
+			endif;
+			break;
+		case 'user_login':
+			$form['name']['#description']=null;
+			$form['pass']['#description']=null;
+			$form['actions']['submit']['#attributes']=array('class'=>array('c6','bg'));
+			if(drupal_get_destination()['destination'] === 'user'){
+				$form['#attributes']=array('class'=>array('grid-8','prefix-4','c1','bdr'));
+				$form['#attributes']['id'] = 'register_form';
+			}
+			break;
+		case 'user_pass':
+			$form['#attributes']=array('class'=>array('grid-8','prefix-4','c1','bdr'));
+			$form['#attributes']['id'] = 'register_form';			
+			break;
+		case 'contact_site_form':	
+			if(current_path()==='production'){
+				$form['phone'] = array(
+					'#title'    => t('Your Phone'),
+					'#type'     => 'textfield',
+					'#required' => TRUE,
+				);
+				if(user_has_role(2)){
+					global $user;
+					$user = user_load($user->uid);
+					$name = $user->field_first_name['und'][0]['value'].' '.$user->field_last_name['und'][0]['value'];
+					$form['name']['#default_value']=$name;
+					$form['phone']['#default_value']=$user->field_telephone['und'][0]['value'];
+				}
+				
+				$form['cid']['#default_value']=2;
+				$form['cid']['#access']=false;
+				$form['subject']['#default_value']='Request for production registry access';
+				$form['subject']['#access']=false;
+				$form['message']['#attributes']=array('placeholder'=>t('(required) Tell us what kind of information you are looking for and why...'));
+				$form['phone']['#attributes']=array('placeholder'=>t('(required) Will be kept private'));
+				$form['name']['#attributes']=array('placeholder'=>t('(required) Will be kept private'));
+				$form['mail']['#attributes']=array('placeholder'=>t('(required) Will be kept private'));
+				$form['message']['#title']=null;
+				$form['copy']['#access']=false;	
+				$form['actions']['submit']['#value']=t('Send');	
+				$form['actions']['submit']['#attributes']['class']=array('c1','bg');
+
+				$order = array(
+					'name',
+					'mail',
+					'phone',
+					'subject',
+					'cid',
+					'message',
+					'copy',
+					'submit'
+				);
+				foreach ($order as $key => $field) {
+					// Set/Reset the field's 
+					// weight to the array key value
+					// from our order array. 
+					$form[$field]['#weight'] = $key;
+				}			
+			};
+			
+			break;
+		case 'user_profile_form':
+			
+			//update the counter that guages access count as trigger for new account rules
+			$form['field_entry']['und'][0]['value']['#default_value']=(string)$form['field_entry']['und'][0]['value']['#default_value']+1;
+			
+			//set the roles that an editor is allowed to edit
+			if(user_has_role(4)){
+				foreach($form['account']['roles']['#options'] as $key=>$option){
+					if($key!==7 && $key!==6){
+						unset($form['account']['roles']['#options'][$key]);
+					}
+				}
+				$form['account']['roles']['#access']=true;
+			}
+			
+			//turn off contact form access settings except for super admin
+			if(!user_has_role(3)){
+				$form['contact']['#access']=false;
+			}
+			break;
+	}
+}
+function form_hooks_mail_alter(&$message) {
+  // We only want to alter the email if it's being
+  // generated by the site-wide contact form page.
+  
+  if ($message['id'] == 'contact_page_mail') {
+    $message['body'][] = t('Phone') .': '. $message['params']['phone'];
+    $message['body'][] = t('Email') .': '. $message['params']['mail'];
+  }
+}
+function form_hooks_hide_text_format(&$form) {
+  $form[LANGUAGE_NONE][0]['format']['format']['#access'] = FALSE;
+  $form[LANGUAGE_NONE][0]['format']['help']['#access'] = FALSE;
+  $form[LANGUAGE_NONE][0]['format']['#theme_wrappers'] = NULL;
+  return $form; 
+}
+function form_hooks_hide_publish(&$form){
+	$form['#access']=FALSE;
+}
