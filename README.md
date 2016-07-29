@@ -1,3 +1,3 @@
 #Film in Limerick
 
-Theme, module and settings files for film.limerick.ie
+Theme and module files for film.limerick.ie
