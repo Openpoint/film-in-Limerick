@@ -9,5 +9,4 @@
 /*.config
 /.editorconfig
 
-/sites/default/files
-/sites/default/default.settings.php
+/sites/default
