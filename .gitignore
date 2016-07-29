@@ -10,3 +10,6 @@
 /.editorconfig
 /sites/example.sites.php
 /sites/default
+/sites/all/themes/rubik
+/sites/all/themes/tao
+/sites/all/modules/contrib
