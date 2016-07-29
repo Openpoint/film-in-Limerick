@@ -8,5 +8,5 @@
 /*.txt
 /*.config
 /.editorconfig
-
+/sites/example.sites.php
 /sites/default
