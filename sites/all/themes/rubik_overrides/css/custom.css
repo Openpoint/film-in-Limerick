@@ -26,3 +26,16 @@
 #edit-overlay-control{
 	display:none!important;
 }
+
+@media screen and (max-device-width:800px) and (orientation:landscape),screen and (max-device-width:800px) and (orientation:portrait), all and (max-width: 800px) {
+	#main-content{
+		display:none;
+	}
+	#page:after{
+		content:'Admin functions require a minimum device width of 800px. Please use a larger screen.'
+	}
+	#page{
+		padding:20px;
+		
+	}
+}
