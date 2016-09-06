@@ -183,12 +183,20 @@ function form_hooks_form_alter(&$form, &$form_state, $form_id) {
 			
 			//set the roles that an editor is allowed to edit
 			if(user_has_role(4)){
+				
+				//dissallow access to the admin role
+				unset($form['account']['roles']['#options'][3]);
+				
+				/*
+				 * * Not a good idea as this removes roles when editor saves their own profile
 				foreach($form['account']['roles']['#options'] as $key=>$option){
 					if($key!==7 && $key!==6){
 						unset($form['account']['roles']['#options'][$key]);
 					}
 				}
+				* */
 				$form['account']['roles']['#access']=true;
+
 			}
 			
 			//turn off contact form access settings except for super admin
