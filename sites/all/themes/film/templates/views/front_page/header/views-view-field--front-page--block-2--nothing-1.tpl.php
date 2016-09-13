@@ -48,7 +48,7 @@ $block = module_invoke('views', 'block_view', '-exp-search-page');
 			<div class='grid-trip last c7 text bdr'>
 				<div class='mask'></div>
 				<div class='button'>
-					<h2 class='font2 bold'>Shot</h2>
+					<h2 class='font2 bold'>Filmed</h2>
 					<div class='font1'>in Limerick</div>
 					<a href='/shot'></a>
 				</div>

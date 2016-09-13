@@ -12,21 +12,25 @@ global $user;
 
 ?>
 <div id='menu_right'>
+	<div class='info c6 text item'>
+		<div class='label'>About</div>
+		<div>
+			<a class="material-icons icon ope">&#xE88F;</a>
+			<a class="material-icons icon close c1 text">&#xE5CD;</a>
+		</div>
+	</div>
 	<div class='bookmarks c6 text item'>
 		<a class="material-icons icon">&#xE866;</a>
 		<div class='count c7 text font1 bold'></div>
 		<a class='trigger' href='/bookmarks'></a>
 	</div>
-	<div class='info c6 text item'>
-		<a class="material-icons icon ope">&#xE88F;</a>
-		<a class="material-icons icon close c1 text">&#xE5CD;</a>
-	</div>
 	<div class='menu c6 text item'>
-		<div class='label'>menu</div>
+		
 		<div>	
 			<a class="material-icons icon ope">&#xE5D2;</a>
 			<a class="material-icons icon close c1 text">&#xE5CD;</a>
 		</div>
+		<div class='label'>menu</div>
 	</div>
 </div>
 <div id='main_menu_right' class='c6 bdr'>
@@ -38,7 +42,7 @@ global $user;
 					<div id='tempmen'>
 						<a class='fronttop c1 text font1 semibold' href='/locations'>Locations</a>
 						<a class='fronttop c1 text font1 semibold' href='/production'>Production</a>
-						<a class='fronttop c1 text font1 semibold' href='/shot'>Shot</a>
+						<a class='fronttop c1 text font1 semibold' href='/shot'>Filmed</a>
 					</div>
 					<?php } ?>
 					<h2 class='c6 text font1 semibold'>Resources</h2>

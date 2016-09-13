@@ -21,7 +21,7 @@ function menu_menu_alter(&$items) {
 		'access arguments' => array('access content'),
 	); 
 	$items['shot'] = array(
-		'title' => 'Shot',
+		'title' => 'Filmed',
 		'page callback' => 'newpage',
 		'access arguments' => array('access content'),
 	);
