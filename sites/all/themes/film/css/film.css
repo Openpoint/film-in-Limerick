@@ -1231,6 +1231,7 @@ box-shadow:         inset 0px 0px 20px 0px rgba(0,0,0, 1);
 }
 .info-widget .intro{
 	padding-top:10px;
+	line-height:1.5em;
 }
 .info-widget .ispacer{
 	width:10px;
@@ -1638,7 +1639,7 @@ box-shadow:         inset 0px 0px 20px 0px rgba(0,0,0, 1);
 }
 #slogan .inline{
 	display:inline-block;
-	max-width:300px;
+	max-width:400px;
 }
 #slogan .big{
 	font-size:3.7em;

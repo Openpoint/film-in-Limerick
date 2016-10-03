@@ -6,7 +6,7 @@ global $user;
                 
 		<div id='category_lead' class='grid-6 prefix-5 c1 text font1 semibold'>
                         <h1 class='c1 text font2 bold'><a href='/locations'>Locations</a></h1>
-			<div class='inner'>Browse our locations by category below or do a detail search for your specific needs above.</div>
+			<div class='inner'>From dramatic, windswept coastline to urban culture, the region has it all. Explore a world of different location options here...</div>
 		</div>
 		<?php if($user->uid == 0){ ?>
 		<div class='action_call font2 bold c1 bdr text'>

@@ -9,7 +9,7 @@ if(!user_has_role(3) && !user_has_role(6) && !user_has_role(4)):
 		
 		<div id='category_lead' class='c1 text font1 semibold'>
 			<h1 class='c1 text font2 bold'><a href='/production'>Production</a></h1>
-			<div class='inner'>Need talent or equipment locally?<br>Contact us for access to the registry.</div>
+			<div class='inner'>From crew to car hire and from stylists to caterers <br>– let us put you in touch with the right people.<br><br>Contact us for access to the registry.</div>
 		</div>
 
 		<div class='clearfix'></div>

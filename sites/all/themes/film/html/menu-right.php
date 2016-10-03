@@ -108,11 +108,18 @@ global $user;
 		<div class='container'>
 			<div class='grid-16'>
 				<div class='grid-7 suffix-1'>
+					<p>Born out of a commitment to develop the film industry in Limerick and promote its profile, Film in Limerick is an important joint venture between Limerick City & County Council and Innovate Limerick. Ours is an organisation specifically geared for the film, television, moving image art and online video industries, in Limerick and the Mid-West region.</p>
+				</div>
+				<div class='grid-7 prefix-1'>
+					<p>We are dedicated to being your one port of call for a wealth of advice, information, contacts and resources – all designed to make your filmmaking experience here easier, smoother and more streamlined.</p>
+					<p>We answer the questions, solve the queries and get the information you need – so you don’t have to.</p>
+				<!--
 					<p>Film in Limerick is a joint venture between Limerick City and County Council and Innovate Limerick. Our goal is to facilitate the growing film and TV production industry in the region by providing a service to find locations and production resources.</p>
 				</div>
 				<div class='grid-7 prefix-1'>
 					<p>We are actively engaged with professionals and the public at large to gather information and resources, curate it and present a reliable information resource.</p>
 					<p>If you have information you would like to include, please register an account and submit it to us.</p>
+				-->
 					<div class="action_call font2 bold c6 bdr text">
 						<div class="spacer"></div>
 						<div class="inner">
